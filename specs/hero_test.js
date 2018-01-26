@@ -122,4 +122,11 @@ describe('Hero test', function() {
     assert.strictEqual(hero.health, 75);
   })
 
+  it('loses 1.5 x health if eating poisoned favourite food', function() {
+    hero.health = 80;
+    rat.touch(favFood);
+    hero.eat(favFood);
+    assert.strictEqual(hero.health, 65);
+  })
+
 })
