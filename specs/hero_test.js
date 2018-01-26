@@ -10,14 +10,18 @@ describe('Hero test', function() {
   var easyTask;
   var mediumTask;
   var hardTask;
+  var completedTask;
 
   beforeEach(function() {
     hero = new Hero("Captain Expendable", "Laser Cake", 100);
     food = new Food("Cheese", 5);
+    cake= new Food("Cake", 7);
     favFood = new Food("Laser Cake", 10);
     easyTask = new Task(1, 1, food);
-    mediumTask = new Task(3, 2, food);
+    mediumTask = new Task(3, 2, cake);
     hardTask = new Task(5, 5, favFood);
+    completedTask = new Task(5, 5, favFood);
+    completedTask.complete = true;
   })
 
   it('has a name, fav food and health when created', function() {
@@ -49,7 +53,7 @@ describe('Hero test', function() {
     assert.strictEqual(hero.isFavFood(favFood), 1.5);
   })
 
-  it('eating favourite food will double the replenishment', function() {
+  it('eating favourite food will multiply the replenishment by 1.5', function() {
     hero.health = 50;
     hero.eat(favFood);
     assert.strictEqual(hero.health, 65);
@@ -67,9 +71,45 @@ describe('Hero test', function() {
     hero.acceptTask(mediumTask);
     hero.acceptTask(hardTask);
     hero.acceptTask(easyTask);
-    hero.sortTasksByDifficulty();
+    hero.sortByDifficulty(hero.tasks);
     let expected = [easyTask, mediumTask, hardTask];
     assert.deepEqual(hero.tasks, expected);
+  })
+
+  it('can sort tasks by urgency', function() {
+    hero.acceptTask(mediumTask);
+    hero.acceptTask(hardTask);
+    hero.acceptTask(easyTask);
+    hero.sortByUrgency(hero.tasks);
+    let expected = [hardTask, mediumTask, easyTask];
+    assert.deepEqual(hero.tasks, expected);
+  })
+
+  it('can sort tasks by reward', function() {
+    hero.acceptTask(mediumTask);
+    hero.acceptTask(hardTask);
+    hero.acceptTask(easyTask);
+    hero.sortByReward(hero.tasks);
+    let expected = [hardTask, mediumTask, easyTask];
+    assert.deepEqual(hero.tasks, expected);
+  })
+
+  it('can find complete tasks', function() {
+    hero.acceptTask(mediumTask);
+    hero.acceptTask(hardTask);
+    hero.acceptTask(easyTask);
+    hero.acceptTask(completedTask);
+    let expected = [completedTask];
+    assert.deepEqual(hero.completeTasks(), expected);
+  })
+
+  it('can find incomplete tasks', function() {
+    hero.acceptTask(mediumTask);
+    hero.acceptTask(hardTask);
+    hero.acceptTask(easyTask);
+    hero.acceptTask(completedTask);
+    let expected = [mediumTask, hardTask, easyTask];
+    assert.deepEqual(hero.incompleteTasks(), expected);
   })
 
 })

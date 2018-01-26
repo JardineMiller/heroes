@@ -33,11 +33,36 @@ const Hero = function(name, favFood, health) {
     this.tasks.push(task);
   };
 
-  Hero.prototype.sortTasksByDifficulty = function() {
-    this.tasks.sort(function(first, next) {
-      return first.difficulty - next.difficulty;
+  Hero.prototype.sortByDifficulty = function(list) {
+    list.sort(function(first, next) {
+      return first.difficulty > next.difficulty;
     })
   };
+
+  Hero.prototype.sortByUrgency = function(list) {
+    list.sort(function(first, next) {
+      return first.urgency < next.urgency;
+    })
+  };
+
+  Hero.prototype.sortByReward = function(list) {
+    list.sort(function(first, next) {
+      return first.reward.replenishment < next.reward.replenishment;
+    })
+  };
+
+  Hero.prototype.completeTasks = function() {
+    return this.tasks.filter(function(task) {
+      return task.complete === true;
+    })
+  };
+
+  Hero.prototype.incompleteTasks = function() {
+    return this.tasks.filter(function(task) {
+      return task.complete === false;
+    })
+  };
+
 
 }
 
