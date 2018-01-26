@@ -1,16 +1,23 @@
 const assert = require('assert');
 const Hero = require('../hero.js');
 const Food = require('../food.js');
+const Task = require('../task.js');
 
 describe('Hero test', function() {
   var hero;
   var food;
   var favFood;
+  var easyTask;
+  var mediumTask;
+  var hardTask;
 
   beforeEach(function() {
     hero = new Hero("Captain Expendable", "Laser Cake", 100);
     food = new Food("Cheese", 5);
     favFood = new Food("Laser Cake", 10);
+    easyTask = new Task(1, 1, food);
+    mediumTask = new Task(3, 2, food);
+    hardTask = new Task(5, 5, favFood);
   })
 
   it('has a name, fav food and health when created', function() {
@@ -46,6 +53,14 @@ describe('Hero test', function() {
     hero.health = 50;
     hero.eat(favFood);
     assert.strictEqual(hero.health, 65);
+  })
+
+  it('can add a task', function() {
+    hero.acceptTask(easyTask);
+    assert.strictEqual(hero.tasks.length, 1);
+    assert.strictEqual(hero.tasks[0].difficulty, 1);
+    assert.strictEqual(hero.tasks[0].urgency, 1);
+    assert.strictEqual(hero.tasks[0].reward, food);
   })
 
 })

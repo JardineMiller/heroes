@@ -29,6 +29,10 @@ const Hero = function(name, favFood, health) {
     }
   };
 
+  Hero.prototype.acceptTask = function(task) {
+    this.tasks.push(task);
+  };
+
 }
 
 module.exports = Hero;
