@@ -16,6 +16,10 @@ const Food = function(name, replenishmentValue) {
       this.applyNegativeReplenishment();
     }
   };
+
+  Food.prototype.applyFoodModifer = function(hero) {
+    return hero.isFavFood(this) ? 1.5 : 1;
+  };
 }
 
 module.exports = Food;
