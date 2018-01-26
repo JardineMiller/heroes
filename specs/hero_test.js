@@ -2,8 +2,10 @@ const assert = require('assert');
 const Hero = require('../hero.js');
 const Food = require('../food.js');
 const Task = require('../task.js');
+const Rat = require('../rat.js');
 
 describe('Hero test', function() {
+  var rat;
   var hero;
   var food;
   var favFood;
@@ -13,6 +15,7 @@ describe('Hero test', function() {
   var completedTask;
 
   beforeEach(function() {
+    rat = new Rat();
     hero = new Hero("Captain Expendable", "Laser Cake", 100);
     food = new Food("Cheese", 5);
     cake= new Food("Cake", 7);
@@ -50,7 +53,7 @@ describe('Hero test', function() {
   })
 
   it('it can check for favourite food', function() {
-    assert.strictEqual(hero.isFavFood(favFood), 1.5);
+    assert.strictEqual(hero.isFavFood(favFood), true);
   })
 
   it('eating favourite food will multiply the replenishment by 1.5', function() {
@@ -110,6 +113,13 @@ describe('Hero test', function() {
     hero.acceptTask(completedTask);
     let expected = [mediumTask, hardTask, easyTask];
     assert.deepEqual(hero.incompleteTasks(), expected);
+  })
+
+  it('loses health if eating a poisoned food', function() {
+    hero.health = 80;
+    rat.touch(food);
+    hero.eat(food);
+    assert.strictEqual(hero.health, 75);
   })
 
 })

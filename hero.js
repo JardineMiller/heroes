@@ -10,15 +10,20 @@ const Hero = function(name, favFood, health) {
   };
 
   Hero.prototype.eat = function(food) {
-    let modifier = this.isFavFood(food);
-    this.increaseHealth(food.replenishment * modifier);
+    food.poisonCheck();
+    let modifier = this.applyFoodModifer(food);
+    this.adjustHealth(food.replenishment * modifier);
+  };
+
+  Hero.prototype.applyFoodModifer = function(food) {
+    return this.isFavFood(food) ? 1.5 : 1;
   };
 
   Hero.prototype.isFavFood = function(food) {
-    return food.name === this.favFood ? 1.5 : 1;
+    return food.name === this.favFood ? true : false;
   };
 
-  Hero.prototype.increaseHealth = function(amount) {
+  Hero.prototype.adjustHealth = function(amount) {
     this.health += amount;
     this.checkMaximumHealth();
   };
