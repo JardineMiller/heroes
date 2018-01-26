@@ -33,6 +33,12 @@ const Hero = function(name, favFood, health) {
     this.tasks.push(task);
   };
 
+  Hero.prototype.sortTasksByDifficulty = function() {
+    this.tasks.sort(function(first, next) {
+      return first.difficulty - next.difficulty;
+    })
+  };
+
 }
 
 module.exports = Hero;

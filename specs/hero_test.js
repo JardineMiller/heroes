@@ -63,4 +63,13 @@ describe('Hero test', function() {
     assert.strictEqual(hero.tasks[0].reward, food);
   })
 
+  it('can sort tasks by difficulty', function() {
+    hero.acceptTask(mediumTask);
+    hero.acceptTask(hardTask);
+    hero.acceptTask(easyTask);
+    hero.sortTasksByDifficulty();
+    let expected = [easyTask, mediumTask, hardTask];
+    assert.deepEqual(hero.tasks, expected);
+  })
+
 })
