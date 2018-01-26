@@ -42,4 +42,10 @@ describe('Hero test', function() {
     assert.strictEqual(hero.isFavFood(favFood), true);
   })
 
+  it('eating favourite food will double the replenishment', function() {
+    hero.health = 50;
+    hero.eat(favFood);
+    assert.strictEqual(hero.health, 70);
+  })
+
 })

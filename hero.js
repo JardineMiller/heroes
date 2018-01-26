@@ -10,15 +10,24 @@ const Hero = function(name, favFood, health) {
   };
 
   Hero.prototype.eat = function(food) {
-    this.increaseHealth(food.replenishment);
+    let modifier = this.calcFoodModifier(food);
+    this.increaseHealth(food.replenishment * modifier);
   };
 
   Hero.prototype.isFavFood = function(food) {
     return food.name === this.favFood ? true : false;
   };
 
+  Hero.prototype.calcFoodModifier = function(food) {
+    return this.isFavFood(food) ? 2 : 1;
+  };
+
   Hero.prototype.increaseHealth = function(amount) {
     this.health += amount;
+    this.checkMaximumHealth();
+  };
+
+  Hero.prototype.checkMaximumHealth = function() {
     if(this.health > 100) {
       this.health = 100;
     }
