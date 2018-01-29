@@ -20,6 +20,10 @@ const Food = function(name, replenishmentValue) {
   Food.prototype.applyFoodModifer = function(hero) {
     return hero.isFavFood(this) ? 1.5 : 1;
   };
+
+  Food.prototype.finalReplenishmentValue = function(hero) {
+    return this.applyFoodModifer(hero) * this.replenishment;
+  };
 }
 
 module.exports = Food;

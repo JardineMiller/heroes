@@ -11,8 +11,7 @@ const Hero = function(name, favFood, health) {
 
   Hero.prototype.eat = function(food) {
     food.poisonCheck();
-    let modifier = food.applyFoodModifer(this);
-    this.adjustHealth(food.replenishment * modifier);
+    this.adjustHealth(food.finalReplenishmentValue(this));
   };
 
   Hero.prototype.isFavFood = function(food) {
@@ -33,6 +32,8 @@ const Hero = function(name, favFood, health) {
   Hero.prototype.acceptTask = function(task) {
     this.tasks.push(task);
   };
+
+
 
   Hero.prototype.sortByDifficulty = function(list) {
     list.sort(function(first, next) {
